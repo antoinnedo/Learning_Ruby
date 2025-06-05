@@ -1,5 +1,5 @@
 class Node
-  attr_accessor :value, :next
+  attr_accessor :value, :next_node
 
   def initialize(value)
     @value = value
@@ -27,7 +27,7 @@ class LinkedList
   end
 
   def prepend(value)
-    new_node = Node.new()
+    new_node = Node.new(value)
     if @size == 0
       @head = @tail = new_node
     else
@@ -50,30 +50,30 @@ class LinkedList
   end
 
   def at(index)
+    return nil if index >= @size || index < 0
+
     current = @head
-    count = 0
-    while current and count < index
-      current = current.next_node
-      count += 1
-    end
+    index.times { current = current.next_node }
     current.value
   end
 
   def pop
-    return nil if @head.nil?
+    return nil if @size == 0
 
-    if @head.next.nil?
+    if @size == 1
       value = @head.value
       @head = @tail = nil
+      @size = 0
       return value
     end
 
     current = @head
-    current = current.next until current.next.next.nil?
-    value = current.next.value
-    current.next = nil
+    current = current.next_node until current.next_node.next_node.nil?
+    value = current.next_node.value
+    current.next_node = nil
     @tail = current
-    return value
+    @size -= 1
+    value
   end
 
   def contains?(value)
@@ -85,4 +85,24 @@ class LinkedList
     false
   end
 
-  def
+  def find(value)
+    current = @head
+    until current.nil?
+      return value if current.value == value
+      current = current.next_node
+    end
+  end
+
+  def to_s
+    return "List is empty" if @size == 0
+
+    current = @head
+    str = ""
+    while current
+      str += "( #{current.value} )"
+      str += " -> " unless current.next_node.nil?
+      current = current.next_node
+    end
+    str
+  end
+end
