@@ -1,10 +1,10 @@
 # antoinnedo/learning_ruby/Learning_Ruby-main/Mastermind/colors.rb
 class Colors
-  VALID_COLORS = ['BLUE', 'RED', 'GREEN', 'YELLOW', 'VIOLET', 'BLACK', 'WHITE'].freeze
-  CODE_LENGTH = 4 # Or any other length you prefer
-  MAX_TURNS = 10   # Or any other number of turns
+  VALID_COLORS = ['BLUE', 'RED', 'GREEN', 'YELLOW', 'VIOLET', 'ORANGE', 'CYAN', 'MAGENTA'].freeze
 
-  def self.sample_code
-    Array.new(CODE_LENGTH) { VALID_COLORS.sample }
+  # Note: MAX_TURNS is removed from here.
+
+  def self.generate_secret_code(code_length)
+    Array.new(code_length) { VALID_COLORS.sample }
   end
 end

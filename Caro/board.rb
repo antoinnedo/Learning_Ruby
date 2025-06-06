@@ -1,3 +1,5 @@
+require_relative './game.rb'
+
 class Board
   # update the board
   def print_board

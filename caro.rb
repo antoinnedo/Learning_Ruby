@@ -17,9 +17,10 @@ class Game
         @human_symbol = input_symbol
         if @human_symbol == 'X'
           @bot_symbol = 'O'
-        else
+        elsif @human_symbol == 'O'
           @bot_symbol = 'X'
-        break
+          break
+        end
       else
         puts 'Invalid input. X or O?'
       end
