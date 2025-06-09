@@ -41,7 +41,7 @@ module Display
         -----
         |   |
         O   |
-       /|\  |
+       /|\\  |
             |
             |
       ---------
@@ -50,7 +50,7 @@ module Display
         -----
         |   |
         O   |
-       /|\  |
+       /|\\  |
        /    |
             |
       ---------
@@ -59,8 +59,8 @@ module Display
         -----
         |   |
         O   |
-       /|\  |
-       / \  |
+       /|\\  |
+       / \\  |
             |
       ---------
       """
@@ -69,7 +69,7 @@ module Display
   end
 
   def display_word(secret_word, correct_letters)
-    secret_word.chars.map { |c| correct_letters.include?(c) ? '\u2714' : '_' }.join(' ')
+    secret_word.chars.map { |c| correct_letters.include?(c) ? c : '_' }.join(' ')
   end
 
   def display_status(secret_word, correct_letters, incorrect_letters, remaining_guesses)

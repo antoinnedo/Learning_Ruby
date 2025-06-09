@@ -1,10 +1,10 @@
 class Dictionary
   def initialize(file_path)
     @words = File.readlines(file_path, chomp: true)
-      .select { |word| word.length.between?(5, 12)}
+      .select { |words| words.length.between?(5, 12)}
   end
 
-  def ramdom_word
-    @word.sample.downcase
+  def random_word
+    @words.sample.downcase
   end
 end
