@@ -61,6 +61,12 @@ class Game
 
       return 'exit' if input == 'exit'
 
+      if input == 'resign'
+        opponent_color = (@current_player.color == :white) ? 'Black' : 'White'
+        puts "#{@current_player.color.to_s.capitalize} has resigned. #{opponent_color} wins!"
+        return 'resign' # Return a special value
+      end
+
       # Validate the input format (e.g., a1b2). Must be 4 characters.
       if input.match?(/^[a-h][1-8][a-h][1-8]$/)
         # Convert algebraic notation like 'e2e4' to array coordinates [[6, 4], [4, 4]]

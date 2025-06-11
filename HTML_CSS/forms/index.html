@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Time to enlist!</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-section">
+            <div class="logo-banner">
+                <img src="./the-battle-cats-svgrepo-com.svg" alt="Battle Cat Logo">
+                <span>PET WAR ENLISTMENT</span>
+            </div>
+        </div>
+
+        <div class="right-section">
+
+            <div class="header-text">
+                <p><strong>The Great Pet War </strong>has been going on for too long. <strong>WE NEED MORE SOLDIERS!</strong></p>
+            </div>
+
+            <form action="#" method="GET">
+                <div class="form-header">Let's fight the world!</div>
+
+                <div class="form-inputs">
+                    <div class="input-group">
+                        <label for="first_name">FIRST NAME</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="last_name">LAST NAME</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">EMAIL</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone_number">PHONE NUMBER</label>
+                        <input type="tel" id="phone_number" name="phone_number">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" class="error" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm_password">CONFIRM PASSWORD</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="error" required>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn">Enlist</button>
+                    <p>Already enlisted? Check out the Geneva Convention to not commit war crime. <a href="#">Geneva Convention</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

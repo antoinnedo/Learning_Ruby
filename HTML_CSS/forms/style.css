@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    font-family: "Robotto", sans-serif;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.left-section {
+    width: 40%;
+    background-image: url('./thousand_yard_stare.webp'); 
+    background-size: cover;
+    background-position: right;
+    display: flex;
+    align-items: center; /* Vertically centers the logo banner */
+}
+
+.right-section {
+    width: 60%;
+    background-color: #f7fafc;
+    padding: 2rem;
+}
+
+.logo-banner {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.logo-banner img {
+    height: 80px; /* Adjust as needed */
+    vertical-align: middle;
+}
+
+.logo-banner span {
+    font-family: 'Norse-Bold', sans-serif;
+    font-size: 4rem;
+    color: white;
+    vertical-align: middle;
+}
+
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.form-inputs {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    gap: 1.5rem; /* Space between input groups */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 0.75rem); /* Two columns with gap */
+}
+
+label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+input {
+    padding: 0.5rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #3B82F6; /* Highlight color on focus */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-footer {
+    margin-top: 2rem;
+}
+
+.btn {
+    background-color: #5D5D5D;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-footer p {
+    margin-top: 1rem;
+}
+
+a {
+    color: #5D5D5D;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Add this to style.css */
+
+/* This helps vertically center the content in the right section */
+.right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f7fafc;
+    padding: 2rem;
+}
+
+/* This adds the red border for invalid inputs as shown in the design */
+input:user-invalid {
+  border-color: red;
+  box-shadow: 0 0 0 1px red;
+}
+
+/* This styles the photo credit on the left side */
+.photo-credit {
+    position: absolute;
+    bottom: 10px;
+    width: 35%;
+    text-align: center;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.photo-credit a {
+    color: white;
+}
