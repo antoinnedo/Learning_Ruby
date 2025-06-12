@@ -26,3 +26,5 @@ loop do
 end
 
 puts "\nThanks for playing!"
+
+##missing: en passant, castling, save game.

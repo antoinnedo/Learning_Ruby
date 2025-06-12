@@ -9,11 +9,6 @@ class King < Piece
     [1, 1], [1, -1], [-1, 1], [-1, -1] # Diagonal
   ].freeze
 
-  # The `moves` method for the King is simpler than sliding pieces.
-  # It checks each of the 8 adjacent squares.
-  # Note: This method does NOT check if a move would place the King in check.
-  # That complex logic is better handled by the Game or Board class after
-  # getting this initial list of possible moves.
   def moves(board)
     possible_moves = []
     current_row, current_col = position
@@ -36,7 +31,7 @@ class King < Piece
       end
     end
 
-    # Castling is a special move and will be handled separately.
+    # Castling is handled somewhere else
     possible_moves
   end
 

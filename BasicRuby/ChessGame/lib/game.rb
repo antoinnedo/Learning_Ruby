@@ -21,6 +21,8 @@ class Game
 
     # Set the starting player. White always goes first.
     @current_player = @player1
+    @history = {} # NEW: To track board states for threefold repetition
+    @halfmove_clock = 0 #counter for 50 move rule
   end
 
   # This is the main game loop, which continues until the game is over.
@@ -28,13 +30,41 @@ class Game
     loop do
       # 1. Display the current state of the board.
       @board.display
+
+      # Check for Checkmate (Win condition)
+      if checkmate?(@current_player.color)
+        # The previous player made the winning move.
+        opponent = @current_player.color == :white ? 'Black' : 'White'
+        puts "Checkmate! #{opponent} wins!"
+        break
+      # Check for Stalemate (Draw condition)
+      elsif stalemate?(@current_player.color)
+        puts "Draw by stalemate!"
+        break
+      # Check for Threefold Repetition (Draw condition)
+      elsif @history[board_state_key] && @history[board_state_key] >= 3
+        puts "Draw by threefold repetition!"
+        break
+      # Check for 50-Move Rule (Draw condition)
+      elsif @halfmove_clock >= 100
+        puts "Draw by 50-move rule!"
+        break
+      # Check for Insufficient Material (Draw condition)
+      elsif @board.insufficient_material?
+        puts "Draw by insufficient material!"
+        break
+      end
+
       puts "\nIt's #{@current_player.color}'s turn."
 
       # 2. Get a move from the current player.
       move = get_move
 
-      # Allow the user to exit gracefully.
-      break if move == 'exit'
+      
+      # Allow the user to exit or resign
+      break if move == 'exit' || move == 'resign'
+
+      
 
       # 3. Process the move. If it's invalid, the loop continues and asks again.
       if process_move(move)
@@ -43,15 +73,48 @@ class Game
       end
 
       # (Future step: Check for checkmate or stalemate here)
-      # if @board.checkmate?(@current_player.color)
-      #   @board.display
-      #   puts "Checkmate! #{(@current_player == @player1 ? @player2 : @player1).color} wins!"
-      #   break
-      # end
+      
     end
   end
 
   private
+
+  def checkmate?(color)
+    # 1. It can't be checkmate if the king isn't currently in check.
+    return false unless @board.in_check?(color)
+
+    # 2. Get all pieces belonging to the player in check.
+    player_pieces = @board.pieces(color)
+
+    # 3. Check if any of those pieces have any valid moves.
+    # The 'none?' method returns true if the block never returns true for any element.
+    # So, if none of the pieces have any valid moves, this will be true.
+    player_pieces.none? do |piece|
+      !piece.valid_moves(@board).empty?
+    end
+  end
+
+  # You need a way to represent the board state as a unique key.
+  # A simple string of piece positions and the current turn works well.
+  def board_state_key
+    state = ""
+    @board.grid.flatten.each do |piece|
+      state += piece ? "#{piece.class}-#{piece.color}-#{piece.position}" : "nil"
+    end
+    state += @current_player.color.to_s
+    state
+  end
+
+  def stalemate?(color)
+    # It can only be stalemate if the king is NOT in check.
+    return false if @board.in_check?(color)
+
+    # If any piece has at least one valid move, it's not stalemate.
+    # This is the same logic as the second part of checkmate?.
+    @board.pieces(color).all? do |piece|
+      piece.valid_moves(@board).empty?
+    end
+  end
 
   # Asks the current player for input and converts it to board coordinates.
   def get_move
@@ -119,11 +182,21 @@ class Game
       return false
     end
 
-    # (Future step: Check if the move would put the current player in check)
+    destination_piece = @board.piece_at(end_pos)
 
+    if piece.is_a?(Pawn) || !destination_piece.nil?
+      @halfmove_clock = 0
+    else
+      @halfmove_clock += 1
+    end
     # --- Execute the Move ---
     # If all checks pass, move the piece on the board.
     @board.move_piece(start_pos, end_pos)
+
+    # NEW: Update history for threefold repetition
+    key = board_state_key
+    @history[key] = @history.fetch(key, 0) + 1
+    
     true
   end
 

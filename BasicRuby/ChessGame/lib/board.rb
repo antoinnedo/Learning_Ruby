@@ -48,21 +48,85 @@ class Board
   # Displays a visual representation of the board in the console.
   def display
     puts
-    puts "    a  b  c  d  e  f  g  h"
-    puts "  +------------------------+"
+    puts "    a   b   c   d   e   f   g   h"
+    puts "  +---+---+---+---+---+---+---+---+" # Top border
     @grid.each_with_index do |row, row_idx|
+      # Print the row number and the opening pipe
       print "#{8 - row_idx} |"
-      # And change this loop:
-      row.each_with_index do |square, col_idx| # Use each_with_index
-        # To calculate the background like this:
-        background = (row_idx + col_idx) % 2 == 0 ? :light_blue : :light_black
-        print " #{square || ' '} ".ljust(3)
+
+      # Print each square with its content and a closing pipe
+      row.each do |square|
+        print " #{square || ' '} |"
       end
-      puts "| #{8 - row_idx}"
+
+      # Print the row number again at the end of the line
+      puts " #{8 - row_idx}"
+
+      # Print the horizontal divider between rows
+      puts "  +---+---+---+---+---+---+---+---+"
     end
-    puts "  +------------------------+"
-    puts "    a  b  c  d  e  f  g  h"
+    puts "    a   b   c   d   e   f   g   h"
     puts
+  end
+
+  def pieces(color)
+    @grid.flatten.compact.select { |piece| piece.color == color }
+  end
+
+  # NEW: Checks if a player of a given color is in check.
+  def in_check?(color)
+    # 1. Find the position of that color's king.
+    king_pos = find_king(color)
+    return false unless king_pos # Should not happen in a real game
+
+    # 2. Check if any opponent piece can attack that square.
+    opponent_color = (color == :white) ? :black : :white
+    pieces(opponent_color).any? do |piece|
+      # Note: We use the basic `moves` method here, not `valid_moves`,
+      # to avoid an infinite loop of checks.
+      piece.moves(self).include?(king_pos)
+    end
+  end
+
+  #Creates a deep copy of the board and its pieces for move simulation.
+  def dup
+    new_board = Board.new
+    
+    # Create a new grid and fill it with duplicates of the original pieces
+    new_grid = @grid.map do |row|
+      row.map do |piece|
+        piece ? piece.dup : nil # Duplicate each piece, or keep nil
+      end
+    end
+    
+    new_board.instance_variable_set(:@grid, new_grid)
+    return new_board
+  end
+
+  # Helper method to find the position of a king.
+  def find_king(color)
+    @grid.each_with_index do |row, r_idx|
+      row.each_with_index do |piece, c_idx|
+        if piece.is_a?(King) && piece.color == color
+          return [r_idx, c_idx]
+        end
+      end
+    end
+    nil # King not found
+  end
+
+  def insufficient_material?
+    # Get a list of all pieces except kings
+    pieces_left = @grid.flatten.compact.reject { |p| p.is_a?(King) }
+
+    # Case 1: King vs King (no other pieces left)
+    return true if pieces_left.empty?
+
+    # Case 2: King vs King + one minor piece (Knight or Bishop)
+    if pieces_left.length == 1 && (pieces_left.first.is_a?(Knight) || pieces_left.first.is_a?(Bishop))
+      return true
+    end
+    false
   end
 
   private
@@ -84,5 +148,8 @@ class Board
       Queen.new(:white, [7, 3]), King.new(:white, [7, 4]), Bishop.new(:white, [7, 5]),
       Knight.new(:white, [7, 6]), Rook.new(:white, [7, 7])
     ]
+
+    # @grid[0][5] = King.new(:black, [0, 5])
+    # @grid[7][5] = King.new(:white, [7, 5])
   end
 end
