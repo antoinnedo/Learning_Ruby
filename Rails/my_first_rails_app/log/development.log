@@ -1,0 +1,33 @@
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='MyFirstRailsApp'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='MyFirstRailsApp'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='MyFirstRailsApp'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-06-12 09:18:33.110540', '2025-06-12 09:18:33.110543') RETURNING "key" /*application='MyFirstRailsApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='MyFirstRailsApp'*/[0m
+Migrating to CreateCars (20250612091823)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='MyFirstRailsApp'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "cars" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "make" varchar, "model" varchar, "year" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='MyFirstRailsApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250612091823') RETURNING "version" /*application='MyFirstRailsApp'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='MyFirstRailsApp'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='MyFirstRailsApp'*/[0m
+Started GET "/cars" for ::1 at 2025-06-12 16:18:50 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='MyFirstRailsApp'*/[0m
+Processing by CarsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering cars/index.html.erb within layouts/application
+  [1m[36mCar Load (1.1ms)[0m  [1m[34mSELECT "cars".* FROM "cars" /*action='index',application='MyFirstRailsApp',controller='cars'*/[0m
+  ↳ app/views/cars/index.html.erb:8
+  Rendered cars/index.html.erb within layouts/application (Duration: 6.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.0ms | GC: 0.0ms)
+Completed 200 OK in 91ms (Views: 23.4ms | ActiveRecord: 1.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application-8b441ae0.css" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/application-bfcdf840.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/controllers/application-3affb389.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/controllers/hello_controller-708796bd.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/controllers/index-ee64e1f1.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/stimulus.min-4b1e420e.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/turbo.min-3a2e143f.js" for ::1 at 2025-06-12 16:18:50 +0700
+Started GET "/assets/stimulus-loading-1fc53fe7.js" for ::1 at 2025-06-12 16:18:50 +0700
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN deferred TRANSACTION /*application='MyFirstRailsApp'*/[0m
+  [1m[36mCar Load (5.5ms)[0m  [1m[34mSELECT "cars".* FROM "cars" /* loading for pp */ LIMIT 11 /*application='MyFirstRailsApp'*/[0m
