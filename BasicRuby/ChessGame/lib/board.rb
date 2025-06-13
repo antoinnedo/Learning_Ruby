@@ -8,10 +8,12 @@
 class Board
   attr_reader :grid
 
+
   def initialize
     # The grid is an 8x8 array. We'll fill it with nil initially,
     # then populate it with Piece objects.
     @grid = Array.new(8) { Array.new(8) }
+
     setup_board
   end
 
@@ -28,6 +30,25 @@ class Board
   def move_piece(start_pos, end_pos)
     piece_to_move = piece_at(start_pos)
     return unless piece_to_move # Should not happen if Game validates first
+
+    if piece_to_move.is_a?(King) && (end_pos[1] - start_pos[1]).abs == 2
+      # Kingside castle
+      if end_pos[1] > start_pos[1]
+        rook_start_pos = [start_pos[0], 7]
+        rook_end_pos = [start_pos[0], 5]
+      # Queenside castle
+      else
+        rook_start_pos = [start_pos[0], 0]
+        rook_end_pos = [start_pos[0], 3]
+      end
+
+      rook = piece_at(rook_start_pos)
+      # Move the rook
+      @grid[rook_end_pos[0]][rook_end_pos[1]] = rook
+      @grid[rook_start_pos[0]][rook_start_pos[1]] = nil
+      rook.position = rook_end_pos
+      rook.moved!
+    end
 
     # Update the piece's internal position tracker
     piece_to_move.position = end_pos
@@ -88,17 +109,18 @@ class Board
     end
   end
 
+
   #Creates a deep copy of the board and its pieces for move simulation.
   def dup
     new_board = Board.new
-    
+
     # Create a new grid and fill it with duplicates of the original pieces
     new_grid = @grid.map do |row|
       row.map do |piece|
         piece ? piece.dup : nil # Duplicate each piece, or keep nil
       end
     end
-    
+
     new_board.instance_variable_set(:@grid, new_grid)
     return new_board
   end

@@ -79,4 +79,6 @@ class Pawn < Piece
 
     moves
   end
+
+
 end

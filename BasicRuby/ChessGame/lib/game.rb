@@ -60,11 +60,11 @@ class Game
       # 2. Get a move from the current player.
       move = get_move
 
-      
+
       # Allow the user to exit or resign
       break if move == 'exit' || move == 'resign'
 
-      
+
 
       # 3. Process the move. If it's invalid, the loop continues and asks again.
       if process_move(move)
@@ -73,7 +73,7 @@ class Game
       end
 
       # (Future step: Check for checkmate or stalemate here)
-      
+
     end
   end
 
@@ -119,7 +119,8 @@ class Game
   # Asks the current player for input and converts it to board coordinates.
   def get_move
     loop do
-      puts "Enter your move in algebraic notation (e.g., 'e2e4'), or type 'exit' to quit:"
+      print "Enter your move in algebraic notation (e.g., 'e2e4'),"
+      puts " type 'resign' to resign or type 'exit' to quit:"
       input = gets.chomp.downcase
 
       return 'exit' if input == 'exit'
@@ -142,7 +143,8 @@ class Game
     end
   end
 
-  # Translates a single square from algebraic notation (e.g., 'a1') to grid coordinates ([7, 0]).
+  # Translates a single square from algebraic notation
+  # (e.g., 'a1') to grid coordinates ([7, 0]).
   def algebraic_to_coords(alg_notation)
     col_char = alg_notation[0]
     row_char = alg_notation[1]
@@ -158,45 +160,28 @@ class Game
   # Validates and executes a move. Returns true if successful, false otherwise.
   def process_move(move)
     start_pos, end_pos = move
-
     piece = @board.piece_at(start_pos)
 
     # --- Validation Checks ---
-    # 1. Check if there's a piece at the starting position.
     unless piece
       puts "Invalid move: There is no piece at the starting square."
       return false
     end
-
-    # 2. Check if the piece belongs to the current player.
     unless piece.color == @current_player.color
       puts "Invalid move: You can only move your own pieces."
       return false
     end
-
-    # 3. Get all possible moves for that piece and check if the end position is one of them.
-    # NOTE: All your piece 'moves' methods should accept the board as an argument.
-    possible_moves = piece.moves(@board)
-    unless possible_moves.include?(end_pos)
-      puts "Invalid move: That piece cannot move to the destination square."
+    unless piece.valid_moves(@board).include?(end_pos)
+      puts "Invalid move: That piece cannot perform that move."
       return false
     end
 
-    destination_piece = @board.piece_at(end_pos)
+    piece.moved!
 
-    if piece.is_a?(Pawn) || !destination_piece.nil?
-      @halfmove_clock = 0
-    else
-      @halfmove_clock += 1
-    end
-    # --- Execute the Move ---
-    # If all checks pass, move the piece on the board.
-    @board.move_piece(start_pos, end_pos)
-
-    # NEW: Update history for threefold repetition
+    # Update history for threefold repetition
     key = board_state_key
     @history[key] = @history.fetch(key, 0) + 1
-    
+
     true
   end
 
