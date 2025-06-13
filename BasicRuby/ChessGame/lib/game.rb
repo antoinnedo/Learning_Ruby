@@ -176,6 +176,14 @@ class Game
       return false
     end
 
+    @board.move_piece(start_pos, end_pos)
+
+    moved_piece = @board.piece_at(end_pos)
+    if moved_piece.is_a?(Pawn) && (end_pos[0] == 0 || end_pos[0] == 7)
+      # *** THIS IS WHEN YOU CALL IT ***
+      promote_pawn(end_pos, moved_piece.color)
+    end
+
     piece.moved!
 
     # Update history for threefold repetition
@@ -183,6 +191,32 @@ class Game
     @history[key] = @history.fetch(key, 0) + 1
 
     true
+  end
+
+  def promote_pawn(position, color)
+    row, col = position
+    color = @current_player.color
+
+    print "Enter 'Q' for Queen, 'R' for Rook,"
+    puts " 'B' for Bishop, or 'N' for Knight."
+
+    choice = nil
+    loop do
+      choice = gets.chomp.upcase
+      break if ['Q', 'R', 'B', 'N'].include?(choice)
+      puts "Invalid choice. Please enter Q, R, B, or N."
+    end
+
+    new_piece_class = case choice
+                          when 'Q' then Queen
+                          when 'R' then Rook
+                          when 'B' then Bishop
+                          when 'N' then Knight
+                          end
+
+    new_piece = new_piece_class.new(color, position)
+    @board.grid[position[0]][position[1]] = new_piece
+    puts "Pawn promoted to a #{new_piece_class.to_s.downcase}."
   end
 
   # Switches the @current_player to the other player.

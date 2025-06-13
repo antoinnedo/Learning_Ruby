@@ -2,6 +2,7 @@
 
 $LOAD_PATH.unshift(File.expand_path('lib', __dir__))
 require 'game'
+require 'byebug'
 
 loop do
   # (A) Create a fresh Game instance for each new round

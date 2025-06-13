@@ -156,22 +156,25 @@ class Board
   # Sets up the board with all 32 pieces in their standard starting positions.
   def setup_board
     # --- Black Pieces (Top of the board: Rows 0 and 1) ---
-    @grid[0] = [
-      Rook.new(:black, [0, 0]), Knight.new(:black, [0, 1]), Bishop.new(:black, [0, 2]),
-      Queen.new(:black, [0, 3]), King.new(:black, [0, 4]), Bishop.new(:black, [0, 5]),
-      Knight.new(:black, [0, 6]), Rook.new(:black, [0, 7])
-    ]
-    (0..7).each { |col| @grid[1][col] = Pawn.new(:black, [1, col]) }
+    # @grid[0] = [
+    #   Rook.new(:black, [0, 0]), Knight.new(:black, [0, 1]), Bishop.new(:black, [0, 2]),
+    #   Queen.new(:black, [0, 3]), King.new(:black, [0, 4]), Bishop.new(:black, [0, 5]),
+    #   Knight.new(:black, [0, 6]), Rook.new(:black, [0, 7])
+    # ]
+    # (0..7).each { |col| @grid[1][col] = Pawn.new(:black, [1, col]) }
 
-    # --- White Pieces (Bottom of the board: Rows 6 and 7) ---
-    (0..7).each { |col| @grid[6][col] = Pawn.new(:white, [6, col]) }
-    @grid[7] = [
-      Rook.new(:white, [7, 0]), Knight.new(:white, [7, 1]), Bishop.new(:white, [7, 2]),
-      Queen.new(:white, [7, 3]), King.new(:white, [7, 4]), Bishop.new(:white, [7, 5]),
-      Knight.new(:white, [7, 6]), Rook.new(:white, [7, 7])
-    ]
+    # # --- White Pieces (Bottom of the board: Rows 6 and 7) ---
+    # (0..7).each { |col| @grid[6][col] = Pawn.new(:white, [6, col]) }
+    # @grid[7] = [
+    #   Rook.new(:white, [7, 0]), Knight.new(:white, [7, 1]), Bishop.new(:white, [7, 2]),
+    #   Queen.new(:white, [7, 3]), King.new(:white, [7, 4]), Bishop.new(:white, [7, 5]),
+    #   Knight.new(:white, [7, 6]), Rook.new(:white, [7, 7])
+    # ]
 
-    # @grid[0][5] = King.new(:black, [0, 5])
-    # @grid[7][5] = King.new(:white, [7, 5])
+    @grid[0][5] = King.new(:black, [0, 5])
+    @grid[7][5] = King.new(:white, [7, 5])
+    @grid[1][1] = Pawn.new(:white, [1, 1])
+    @grid[0][2] = Pawn.new(:white, [0, 2])
+    @grid[0][3] = Pawn.new(:white, [0, 3])
   end
 end
