@@ -1,0 +1,18 @@
+<h1>Micro Reddit</h1>
+<h2>Posts (<%= Post.public_count %>)</h2>
+<% @post.each do |post| %>
+  <li>
+    <%= link_to post.title, post %>
+  </li>
+<% end %>
+<%= link_to "New Post", new_post_path %>
+
+
+<div>
+  <% if logged_in? %>
+    <%= button_to "Log Out", logout_path, method: :delete %>
+  <% else %>
+    <%# If the user is logged out, show the Login button %>
+    <%= link_to "Log In", login_path %>
+  <% end %>
+</div>

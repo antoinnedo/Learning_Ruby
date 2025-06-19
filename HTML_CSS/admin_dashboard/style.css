@@ -222,7 +222,7 @@ body {
 
 .card-icons {
     align-self: flex-end;
-    margin-top: 20px;
+    margin-top: 0px;
     display: flex;
     gap: 15px;
 }

@@ -1,0 +1,25 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<p>Posted by <%= @post.user.username %></p>
+
+<%= button_to "Delete", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+  <p><%= comment.content %> by <%= comment.user.username %></p>
+  <%= button_to "Delete", [comment.post, comment], method: :delete %>
+<% end %>
+
+
+<% if logged_in? %>
+  <h3>Add a Comment</h3>
+  <%= form_with model: [@post, @post.comments.build] do |form| %>
+    <div><%= form.label :content %></div>
+    <div><%= form.text_area :content, required: true%></div>
+    <div><%= form.submit "Add Comment"%></div>
+  <% end %>
+<% else %>
+  <p><%= button_to "Log in to add a comment", login_path%></p>
+<% end %>
+
+<%= button_to "Log Out", logout_path, method: :delete %>
