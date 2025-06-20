@@ -23,12 +23,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-
-    <%# ================================================================== %>
-    <%# START: This is the new section for displaying flash messages       %>
-    <%# It goes at the top of the body so messages appear on every page.   %>
-    <%# ================================================================== %>
+  <body
     <div class="flash-messages container mx-auto my-4 px-4">
       <% if flash[:notice] %>
         <div class="p-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
@@ -41,11 +36,6 @@
         </div>
       <% end %>
     </div>
-    <%# ================================================================== %>
-    <%# END: End of the flash message section                            %>
-    <%# ================================================================== %>
-
-
     <%= yield %>
 
   </body>

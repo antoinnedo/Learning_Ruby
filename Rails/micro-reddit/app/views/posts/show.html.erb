@@ -2,12 +2,16 @@
 <p><%= @post.body %></p>
 <p>Posted by <%= @post.user.username %></p>
 
-<%= button_to "Delete", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+<% if policy(@post).destroy? %>
+  <%= button_to "Delete", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
 
-<h2>Comments</h2>
+<h2>Comments (<%= @post.comments.public_count %>)</h2>
 <% @post.comments.each do |comment| %>
   <p><%= comment.content %> by <%= comment.user.username %></p>
-  <%= button_to "Delete", [comment.post, comment], method: :delete %>
+  <% if policy(comment).destroy? %>
+    <%= button_to "Delete", [comment.post, comment], method: :delete %>
+  <% end %>
 <% end %>
 
 
@@ -19,7 +23,7 @@
     <div><%= form.submit "Add Comment"%></div>
   <% end %>
 <% else %>
-  <p><%= button_to "Log in to add a comment", login_path%></p>
+  <p><%= link_to "Log in to add a comment", login_path%></p>
 <% end %>
 
 <%= button_to "Log Out", logout_path, method: :delete %>
